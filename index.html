@@ -6,6 +6,40 @@
   <title>Unity WebGL Player | Equipo_tesis</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
+
+  <style>
+    #voice-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    #voice-btn.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #voice-btn:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      #voice-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+        top: 5px;
+        right: 5px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="unity-container" class="unity-desktop">
@@ -25,7 +59,7 @@
   </div>
 
   <!-- Botón para activar el reconocimiento de voz -->
-  <button id="voice-btn" style="position: absolute; top: 10px; right: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; opacity: 0.5; pointer-events: none;">
+  <button id="voice-btn">
     Hablar
   </button>
 
@@ -101,30 +135,18 @@
         const welcomeMessage = new SpeechSynthesisUtterance('¡Bienvenido al TESJo, en qué te puedo ayudar?');
         
         const voiceBtn = document.getElementById('voice-btn');
-        
-        // Solicitar permiso para el micrófono en dispositivos móviles
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-          navigator.mediaDevices.getUserMedia({ audio: true })
-            .then((stream) => {
-              stream.getTracks().forEach(track => track.stop());
-              voiceBtn.style.opacity = '1';
-              voiceBtn.style.pointerEvents = 'auto';
-            })
-            .catch((err) => {
-              console.error('Error al solicitar permiso para el micrófono:', err);
-              voiceBtn.style.opacity = '1';
-              voiceBtn.style.pointerEvents = 'auto';
-            });
-        } else {
-          voiceBtn.style.opacity = '1';
-          voiceBtn.style.pointerEvents = 'auto';
-        }
+        voiceBtn.classList.add('enabled');
 
         voiceBtn.onclick = () => {
-          synth.speak(welcomeMessage);
-          welcomeMessage.onend = () => {
+          if (!voiceBtn.classList.contains('first-click')) {
+            voiceBtn.classList.add('first-click');
+            synth.speak(welcomeMessage);
+            welcomeMessage.onend = () => {
+              recognition.start();
+            };
+          } else {
             recognition.start();
-          };
+          }
         };
 
         recognition.onresult = (event) => {
