@@ -2,14 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <title>Unity WebGL Player | Equipo_tesis</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
   <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #unity-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+
+    #unity-canvas {
+      width: 100%;
+      max-width: 960px;
+      height: auto;
+      border: 1px solid #000;
+    }
+
+    #unity-loading-bar, 
+    #unity-warning, 
+    #unity-footer {
+      width: 100%;
+      text-align: center;
+    }
+
     #voice-btn {
-      position: absolute;
-      top: 10px;
+      position: fixed;
+      bottom: 10px;
       right: 10px;
       padding: 10px 20px;
       background-color: #007bff;
@@ -19,6 +51,7 @@
       cursor: pointer;
       opacity: 0.5;
       pointer-events: none;
+      z-index: 1000;
     }
 
     #voice-btn.enabled {
@@ -29,11 +62,40 @@
     #voice-btn:hover {
       background-color: #0056b3;
     }
+
+    @media (max-width: 600px) {
+      #voice-btn {
+        bottom: 10px;
+        right: 50%;
+        transform: translateX(50%);
+      }
+
+      #unity-canvas {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    @media (max-width: 400px) {
+      #unity-canvas {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      #voice-btn {
+        width: 90%;
+        padding: 10px;
+        right: 5%;
+        bottom: 20px;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="unity-container" class="unity-desktop">
-    <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
     <div id="unity-loading-bar">
       <div id="unity-logo"></div>
       <div id="unity-progress-bar-empty">
@@ -76,11 +138,11 @@
     }
 
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/ProyectoF.loader.js";
+    var loaderUrl = buildUrl + "/ProyectoFinalB.loader.js";
     var config = {
-      dataUrl: buildUrl + "/ProyectoF.data",
-      frameworkUrl: buildUrl + "/ProyectoF.framework.js",
-      codeUrl: buildUrl + "/ProyectoF.wasm",
+      dataUrl: buildUrl + "/ProyectoFinalB.data",
+      frameworkUrl: buildUrl + "/ProyectoFinalB.framework.js",
+      codeUrl: buildUrl + "/ProyectoFinalB.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "Equipo_tesis",
@@ -96,8 +158,8 @@
       container.className = "unity-mobile";
       canvas.className = "unity-mobile";
     } else {
-      canvas.style.width = "960px";
-      canvas.style.height = "600px";
+      canvas.style.width = "100%";
+      canvas.style.height = "auto";
     }
 
     loadingBar.style.display = "block";
@@ -121,7 +183,7 @@
 
         // Mensaje de bienvenida
         const synth = window.speechSynthesis;
-        const welcomeMessage = new SpeechSynthesisUtterance('¡Bienvenido al tesjo, en qué te puedo ayudar?');
+        const welcomeMessage = new SpeechSynthesisUtterance('¡Bienvenido al TESJo, en qué te puedo ayudar?');
         
         const voiceBtn = document.getElementById('voice-btn');
         
@@ -158,7 +220,7 @@
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 0);
           } else if (command.includes('unidad jurídica')) {
-            const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro cai.');
+            const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro CAI.');
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 1);
           }
