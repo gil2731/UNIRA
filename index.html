@@ -215,11 +215,7 @@
           const last = event.results.length - 1;
           const command = event.results[last][0].transcript.trim().toLowerCase();
 
-          if (command.includes('biblioteca')) {
-            const message = new SpeechSynthesisUtterance('Claro, el tecnológico cuenta con una biblioteca en la cual se tiene un área de acervo y atención al público, área de consulta, sala de consejo, sala de lectura, auditorio, cubículos de estudio y sanitarios.');
-            synth.speak(message);
-            unityInstance.SendMessage('Camera', 'MoveToBuilding', 0);
-          } else if (command.includes('unidad jurídica')) {
+          if (command.includes('unidad jurídica')) {
             const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro CAI.');
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 1);
