@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en-us">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -23,6 +23,11 @@
       <div id="unity-build-title">Equipo_tesis</div>
     </div>
   </div>
+
+  <!-- Botón para activar el reconocimiento de voz -->
+  <button id="voice-btn" style="position: absolute; top: 10px; right: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; opacity: 0.5; pointer-events: none;">
+    Hablar
+  </button>
 
   <script>
     var container = document.querySelector("#unity-container");
@@ -49,11 +54,11 @@
     }
 
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/ProyectoF.loader.js";
+    var loaderUrl = buildUrl + "/ProyectoBueno.loader.js";
     var config = {
-      dataUrl: buildUrl + "/ProyectoF.data",
-      frameworkUrl: buildUrl + "/ProyectoF.framework.js",
-      codeUrl: buildUrl + "/ProyectoF.wasm",
+      dataUrl: buildUrl + "/ProyectoBueno.data",
+      frameworkUrl: buildUrl + "/ProyectoBueno.framework.js",
+      codeUrl: buildUrl + "/ProyectoBueno.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "Equipo_tesis",
@@ -86,7 +91,7 @@
           unityInstance.SetFullscreen(1);
         };
 
-        // Aquí empieza el código específico del reconocimiento de voz
+        // Código de reconocimiento de voz
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'es-ES';
         recognition.interimResults = false;
@@ -95,21 +100,9 @@
         const synth = window.speechSynthesis;
         const welcomeMessage = new SpeechSynthesisUtterance('¡Bienvenido al TESJo, en qué te puedo ayudar?');
         
-        const voiceBtn = document.createElement('button');
-        voiceBtn.id = 'voice-btn';
-        voiceBtn.textContent = 'Hablar';
-        voiceBtn.style.position = 'absolute';
-        voiceBtn.style.top = '10px';
-        voiceBtn.style.right = '10px';
-        voiceBtn.style.padding = '10px 20px';
-        voiceBtn.style.backgroundColor = '#007bff';
-        voiceBtn.style.color = 'white';
-        voiceBtn.style.border = 'none';
-        voiceBtn.style.borderRadius = '5px';
-        voiceBtn.style.cursor = 'pointer';
-        voiceBtn.style.opacity = '0.5';
-        voiceBtn.style.pointerEvents = 'none';
-
+        const voiceBtn = document.getElementById('voice-btn');
+        
+        // Solicitar permiso para el micrófono en dispositivos móviles
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
           navigator.mediaDevices.getUserMedia({ audio: true })
             .then((stream) => {
@@ -127,14 +120,12 @@
           voiceBtn.style.pointerEvents = 'auto';
         }
 
-        voiceBtn.addEventListener('click', () => {
+        voiceBtn.onclick = () => {
           synth.speak(welcomeMessage);
           welcomeMessage.onend = () => {
             recognition.start();
           };
-        });
-
-        document.body.appendChild(voiceBtn);
+        };
 
         recognition.onresult = (event) => {
           const last = event.results.length - 1;
