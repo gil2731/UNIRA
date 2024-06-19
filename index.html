@@ -39,6 +39,22 @@
         right: 5px;
       }
     }
+
+    #orientation-warning {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -63,6 +79,11 @@
     Hablar
   </button>
 
+  <!-- Mensaje de advertencia de orientación -->
+  <div id="orientation-warning">
+    Para una mejor experiencia, coloque el teléfono de manera horizontal.
+  </div>
+
   <script>
     var container = document.querySelector("#unity-container");
     var canvas = document.querySelector("#unity-canvas");
@@ -70,6 +91,7 @@
     var progressBarFull = document.querySelector("#unity-progress-bar-full");
     var fullscreenButton = document.querySelector("#unity-fullscreen-button");
     var warningBanner = document.querySelector("#unity-warning");
+    var orientationWarning = document.getElementById('orientation-warning');
 
     function unityShowBanner(msg, type) {
       function updateBannerVisibility() {
@@ -113,6 +135,18 @@
     }
 
     loadingBar.style.display = "block";
+
+    function checkOrientation() {
+      if (window.innerHeight > window.innerWidth) {
+        orientationWarning.style.display = 'flex';
+      } else {
+        orientationWarning.style.display = 'none';
+      }
+    }
+
+    window.addEventListener("orientationchange", checkOrientation);
+    window.addEventListener("resize", checkOrientation);
+    checkOrientation();
 
     var script = document.createElement("script");
     script.src = loaderUrl;
