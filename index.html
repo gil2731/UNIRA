@@ -159,11 +159,11 @@
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 0);
           } else if (command.includes('unidad jurídica')) {
-            const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro CAI.');
+            const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro cai.');
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 1);
           } else if (command.includes('ingeniería en sistemas computacionales')) {
-            const message = new SpeechSynthesisUtterance('La licenciatura de Ingenieria en sistemas computacionales se encuentera en el edificio N.');
+            const message = new SpeechSynthesisUtterance('La licenciatura de Ingenieria en sistemas computacionales se encuentra en el edificio N.');
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 10);
           } else if (command.includes('centro de docencia de contaduría')) {
