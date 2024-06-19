@@ -161,6 +161,7 @@
             const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro CAI.');
             synth.speak(message);
             unityInstance.SendMessage('Camera', 'MoveToBuilding', 1);
+          } 
         };
 
         recognition.onspeechend = () => {
