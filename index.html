@@ -161,24 +161,6 @@ const command = event.results[last][0].transcript.trim().toLowerCase();
         const message = new SpeechSynthesisUtterance('Por supuesto tenemos una unidad jurídica en el nivel 3 del centro CAI.');
         synth.speak(message);
         unityInstance.SendMessage('Camera', 'MoveToBuilding', 1);
-      } else if (command.includes('Ingenieria en sistemas computacionales')) {
-        const message = new SpeechSynthesisUtterance('La licenciatura de Ingenieria en sistemas computacionales se encuentera en el edificio N.');
-        synth.speak(message);
-        unityInstance.SendMessage('Camera', 'MoveToBuilding', 2);
-      } else if (command.includes('Centro de docencia de contaduria')) {
-        const message = new SpeechSynthesisUtterance('El centro de docencia de contaduria se encuentera en el nivel 1 del edificio M.');
-        synth.speak(message);
-        unityInstance.SendMessage('Camera', 'MoveToBuilding', 3);
-      } else if (command.includes('Departamento de titulacion')) {
-        const message = new SpeechSynthesisUtterance('El departamento de titulacion se encuentra en el nivel 2 del edificio K.');
-        synth.speak(message);
-        unityInstance.SendMessage('Camera', 'MoveToBuilding', 4);
-      }
-      else if (command.includes('Sala cisco')) {
-        const message = new SpeechSynthesisUtterance('La sala cisco se encuentra en el nivel 2 del edificio K.');
-        synth.speak(message);
-        unityInstance.SendMessage('Camera', 'MoveToBuilding', 5);
-      }
     };
 
 
